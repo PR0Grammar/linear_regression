@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
 from scipy import interpolate
-from GradientDescent import GradientDescent
+from LinearRegression import LinearRegression
 
 data_matrix = np.loadtxt('./exdata1.txt')
 
@@ -10,7 +10,7 @@ x = data_matrix[0:data_matrix.shape[0], 0:1]
 y = data_matrix[0:data_matrix.shape[0], 1:2]
 
 
-lin_reg = GradientDescent(x, y) 
+lin_reg = LinearRegression(x, y) 
 cost_function = lin_reg.gradient_descent()
 
 predicted_x = []
