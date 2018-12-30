@@ -29,15 +29,23 @@ class GradientDescent:
 
     # Perform gradient descent to minimize cost
     def gradient_descent(self):
+        # Matrix for all changes to the cost function with the corresponding theta values
+        cost_function_changes = np.empty(( self.iterations, self.thetas.shape[0] + 1 ))
+
         for i in range (0, self.iterations):
-            print('J(Theta): ' + str(self.compute_cost()))
+            # For each iteration, add the theta values with corresponding cost
+            for m in range (0, self.thetas.shape[0]):
+                cost_function_changes[i, m] = self.thetas[m, 0]
+            cost_function_changes[i, cost_function_changes.shape[1] - 1] = self.compute_cost()
 
             updated_theta_values = []
             theta_transposed = self.thetas.transpose()
 
+            # For each theta parameter, "descend" to a minimum cost using CURRENT theta values
             for j in range(0, self.thetas.shape[0]):
                 theta_j = self.thetas[j, 0] 
                 err_sum = 0
+                # Computing the "summation" portion of our gradient descent
                 for k in range(0, self.m):
                     x = self.features[k: k+1, 0: self.n]
                     x = x.transpose()
@@ -49,5 +57,8 @@ class GradientDescent:
                 new_theta_j = theta_j - new_theta_j
                 updated_theta_values.append(new_theta_j)
 
+            # Simulatenous update of theta values
             for j in range(0, self.thetas.shape[0]):
                 self.thetas[j, 0] = updated_theta_values[j]
+
+        return cost_function_changes
